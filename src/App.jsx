@@ -4,6 +4,8 @@ import Spinner from './components/Spinner.jsx'
 import MovieCard from './components/MovieCard.jsx'
 import { useDebounce } from 'react-use'
 import { getTrendingMovies, updateSearchCount } from './appwrite.js'
+import {Analytics} from "@vercel/analytics/react";
+
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 
@@ -128,6 +130,7 @@ const App = () => {
                     )}
                 </section>
             </div>
+            <Analytics />
         </main>
     )
 }
