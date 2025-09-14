@@ -11,13 +11,20 @@ const API_BASE_URL = 'https://api.themoviedb.org/3';
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
+// const API_OPTIONS = {
+//     method: 'GET',
+//     headers: {
+//         accept: 'application/json',
+//         Authorization: `Bearer ${API_KEY}`
+//     }
+// }
 const API_OPTIONS = {
     method: 'GET',
     headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${API_KEY}`
+        accept: 'application/json'
     }
 }
+
 
 const App = () => {
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
@@ -29,6 +36,9 @@ const App = () => {
 
     const [trendingMovies, setTrendingMovies] = useState([]);
 
+    const Year = new Date().getFullYear();
+
+
     // Debounce the search term to prevent making too many API requests
     // by waiting for the user to stop typing for 500ms
     useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm])
@@ -38,9 +48,12 @@ const App = () => {
         setErrorMessage('');
 
         try {
+            // const endpoint = query
+            //     ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
+            //     : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
             const endpoint = query
-                ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
-                : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+                ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}&api_key=${API_KEY}`
+                : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}`;
 
             const response = await fetch(endpoint, API_OPTIONS);
 
